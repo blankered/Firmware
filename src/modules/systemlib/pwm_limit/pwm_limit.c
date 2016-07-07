@@ -178,14 +178,10 @@ void pwm_limit_calc(const bool armed, const bool pre_armed, const unsigned num_c
 					control_value = -1.0f * control_value;
 				}
 
-				effective_pwm[i] = control_value * (max_pwm[i] - ramp_min_pwm) / 2 + (max_pwm[i] + ramp_min_pwm) / 2;
-
-				/* last line of defense against invalid inputs */
-				if (effective_pwm[i] < ramp_min_pwm) {
-					effective_pwm[i] = ramp_min_pwm;
-
-				} else if (effective_pwm[i] > max_pwm[i]) {
-					effective_pwm[i] = max_pwm[i];
+				if (i >1){
+					effective_pwm[i] = control_value * (max_pwm[i] - ramp_min_pwm) / 2 + (max_pwm[i] + ramp_min_pwm) / 2;
+				} else {
+					effective_pwm[i] = control_value * (max_pwm[i] - ramp_min_pwm) / 2 + (max_pwm[i] + ramp_min_pwm) / 2 - (max_pwm[i] - ramp_min_pwm);
 				}
 			}
 		}
@@ -205,15 +201,10 @@ void pwm_limit_calc(const bool armed, const bool pre_armed, const unsigned num_c
 			if (reverse_mask & (1 << i)) {
 				control_value = -1.0f * control_value;
 			}
-
-			effective_pwm[i] = control_value * (max_pwm[i] - min_pwm[i]) / 2 + (max_pwm[i] + min_pwm[i]) / 2;
-
-			/* last line of defense against invalid inputs */
-			if (effective_pwm[i] < min_pwm[i]) {
-				effective_pwm[i] = min_pwm[i];
-
-			} else if (effective_pwm[i] > max_pwm[i]) {
-				effective_pwm[i] = max_pwm[i];
+			if (i > 1){
+				effective_pwm[i] = control_value * (max_pwm[i] - min_pwm[i]) / 2 + (max_pwm[i] + min_pwm[i]) / 2;
+			} else {
+				effective_pwm[i] = control_value * (max_pwm[i] - min_pwm[i]) / 2 + (max_pwm[i] + min_pwm[i]) / 2 - (max_pwm[i] - min_pwm[i]);
 			}
 		}
 
