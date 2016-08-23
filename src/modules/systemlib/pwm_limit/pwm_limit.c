@@ -178,10 +178,10 @@ void pwm_limit_calc(const bool armed, const bool pre_armed, const unsigned num_c
 					control_value = -1.0f * control_value;
 				}
 
-				if (i >1){
+				if (i > 1){
 					effective_pwm[i] = control_value * (max_pwm[i] - ramp_min_pwm) / 2 + (max_pwm[i] + ramp_min_pwm) / 2;
 				} else {
-					effective_pwm[i] = control_value * (max_pwm[i] - ramp_min_pwm) / 2 + (max_pwm[i] + ramp_min_pwm) / 2 - (max_pwm[i] - ramp_min_pwm);
+					effective_pwm[i] = control_value * (max_pwm[i] - ramp_min_pwm) / 2 + (max_pwm[i] + ramp_min_pwm) / 2 + (max_pwm[i] - ramp_min_pwm);
 				}
 			}
 		}
@@ -204,7 +204,7 @@ void pwm_limit_calc(const bool armed, const bool pre_armed, const unsigned num_c
 			if (i > 1){
 				effective_pwm[i] = control_value * (max_pwm[i] - min_pwm[i]) / 2 + (max_pwm[i] + min_pwm[i]) / 2;
 			} else {
-				effective_pwm[i] = control_value * (max_pwm[i] - min_pwm[i]) / 2 + (max_pwm[i] + min_pwm[i]) / 2 - (max_pwm[i] - min_pwm[i]);
+				effective_pwm[i] = control_value * (max_pwm[i] - min_pwm[i]) / 2 + (max_pwm[i] + min_pwm[i]) / 2 + (max_pwm[i] - min_pwm[i]);
 			}
 		}
 
