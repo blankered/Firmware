@@ -191,7 +191,7 @@ void pwm_limit_calc(const bool armed, const bool pre_armed, const unsigned num_c
 		for (unsigned i = 0; i < num_channels; i++) {
 
 			float control_value = output[i];
-
+PX4IO_P_STATUS_MIXER_LOWER_LIMIT
 			/* check for invalid / disabled channels */
 			if (!isfinite(control_value)) {
 				effective_pwm[i] = disarmed_pwm[i];

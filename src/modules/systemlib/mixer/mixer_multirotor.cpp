@@ -359,7 +359,7 @@ MultirotorMixer::mix(float *outputs, unsigned space, uint16_t *status_reg)
 	for (unsigned i = 0; i < _rotor_count; i++) {
 		outputs[i] = (roll * _rotors[i].roll_scale +
 			      pitch * _rotors[i].pitch_scale) * roll_pitch_scale +
-			     yaw * _rotors[i].yaw_scale +
+			      yaw * _rotors[i].yaw_scale +
 			     thrust + boost;
 
 		outputs[i] = constrain(_idle_speed + (outputs[i] * (1.0f - _idle_speed)), _idle_speed, 1.0f);
