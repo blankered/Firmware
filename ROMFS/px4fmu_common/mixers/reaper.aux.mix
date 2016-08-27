@@ -1,21 +1,24 @@
 # Manual pass through mixer for servo outputs 1-4
+# M: <control count>
+# O: <-ve scale> <+ve scale> <offset> <lower limit> <upper limit>
+# S: <group> <index> <-ve scale> <+ve scale> <offset> <lower limit> <upper limit>
 
 # AUX1 channel (select RC channel with RC_MAP_AUX1 param)
 M: 1
-O:      10000  10000      0 -10000  10000
-S: 0 3  10000  10000      0 -10000  10000
+O:      10000   10000      0    -10000  10000
+S: 0 3    0     20000 -10000    -10000  10000
 
 # AUX1 channel (select RC channel with RC_MAP_AUX1 param)
 M: 1
-O:      10000  10000      0 -10000  10000
-S: 0 3  10000  10000      0 -10000  10000
+O:      10000   10000      0    -10000  10000
+S: 0 3    0     20000 -10000    -10000  10000
 
 # AUX1 channel (select RC channel with RC_MAP_AUX1 param)
 M: 1
-O:      10000  10000      0 -10000  10000
-S: 0 3  10000  10000      0 -10000  10000
+O:      10000   10000      0    -10000  10000
+S: 0 3    0     20000 -10000    -10000  10000
 
 # AUX1 channel (select RC channel with RC_MAP_AUX1 param)
 M: 1
-O:      10000  10000      0 -10000  10000
-S: 0 3  10000  10000      0 -10000  10000
+O:      10000   10000      0    -10000  10000
+S: 0 3    0     20000 -10000    -10000  10000
