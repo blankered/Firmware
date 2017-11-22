@@ -64,6 +64,8 @@ import zlib
 import base64
 import time
 import array
+import Tkinter
+import tkMessageBox
 import os
 
 from sys import platform as _platform
@@ -602,35 +604,25 @@ def main():
         print("WARNING: You should uninstall ModemManager as it conflicts with any non-modem serial device (like Pixhawk)")
         print("==========================================================================================================")
 
-    # Load the firmware file
-    fw = firmware(args.firmware)
-    print("Loaded firmware for %x,%x, size: %d bytes, waiting for the bootloader..." % (fw.property('board_id'), fw.property('board_revision'), fw.property('image_size')))
-    print("If the board does not respond within 1-2 seconds, unplug and re-plug the USB connector.")
+# Load the firmware file
+fw = firmware(args.firmware)
+simulinkBuild =  os.getenv('PX4_SIMULINK',"None")
+if (simulinkBuild == "y") : 
+	print("### Successfully generated all binary outputs."); #force the unsuccessful build error message to NOT appear
+	
+print("Loaded firmware for %x,%x, size: %d bytes, waiting for the bootloader..." % (fw.property('board_id'), fw.property('board_revision'), fw.property('image_size')))
+print("If the board does not respond within 1-2 seconds, unplug and re-plug the USB connector.")
 
-    # tell any GCS that might be connected to the autopilot to give up
-    # control of the serial port
 
-    # send to localhost and default GCS port
-    ipaddr = '127.0.0.1'
-    portnum = 14550
-
-    # COMMAND_LONG in MAVLink 1
-    heartbeatpacket = bytearray.fromhex('fe097001010000000100020c5103033c8a')
-    commandpacket = bytearray.fromhex('fe210101014c00000000000000000000000000000000000000000000803f00000000f6000000008459')
-
-    # initialize an UDP socket
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-    # send heartbeat to initialize connection and command to free the link
-    s.sendto(heartbeatpacket, (ipaddr, portnum))
-    s.sendto(commandpacket, (ipaddr, portnum))
-
-    # close the socket
-    s.close()
-
-    # Spin waiting for a device to show up
-    try:
-        while True:
+print("PX4_SIMULINK = %s " % simulinkBuild)
+if (simulinkBuild == "y") : 
+	window = Tkinter.Tk()
+	window.wm_withdraw()
+	tkMessageBox.showinfo(title="Pixhawk Flashing", message="Ensure that you have configured the COM port to upload with in the Simulink model's configuration parameter under Coder Target. Please make sure the Pixhawk is DISCONNECTED from your USB Port! AFTER you disconnect AND Press ENTER, Plug-In your Pixhawk to your USB port.  It will be uploaded and re-booted. Please wait for the startup tone.")
+	
+# Spin waiting for a device to show up
+try:
+    while True:
             portlist = []
             patterns = args.port.split(",")
             # on unix-like platforms use glob to support wildcard ports. This allows
